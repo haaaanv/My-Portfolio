@@ -525,44 +525,338 @@
             font-weight: 300;
         }
 
-        /* --- 4. Skills Section --- */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: 0.8fr 1.2fr;
-            gap: 4rem;
+        /* --- 4. Skills Section (AI Skills Galaxy Universe) --- */
+        .skills-galaxy-header {
+            margin-bottom: 2.5rem;
         }
 
-        .skills-intro {
-            max-width: 420px;
-            font-size: 1.15rem;
-            color: var(--muted-color);
-        }
-
-        .skills-container {
+        .skills-universe-wrapper {
+            position: relative;
+            margin-top: 1rem;
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            align-content: flex-start;
-        }
-
-        .skill-pill {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-color);
-            background-color: var(--white);
-            border: 1px solid var(--border-color);
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            transition: var(--transition-fast);
-            display: inline-flex;
+            flex-direction: column;
             align-items: center;
         }
 
-        .skill-pill:hover {
+        .skill-info-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            max-width: 520px;
+            width: 100%;
+            margin: 0 auto 2rem auto;
+            text-align: center;
+            box-shadow: 0 12px 32px rgba(17, 17, 17, 0.05);
+            transition: var(--transition-fast);
+        }
+
+        .skill-info-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-info-header h3 {
+            font-size: 22px;
+            font-weight: 500;
+        }
+
+        .skill-info-tag {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 3px 10px;
+            border-radius: 4px;
+        }
+
+        .skill-info-desc {
+            font-size: 14px;
+            color: var(--muted-color);
+            line-height: 1.6;
+        }
+
+        .galaxy-viewport {
+            position: relative;
+            width: 100%;
+            max-width: 820px;
+            height: 640px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .galaxy-orbits-svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .orbit-line {
+            fill: none;
+            stroke: var(--border-color);
+            stroke-width: 1.5;
+            stroke-dasharray: 4 6;
+            opacity: 0.7;
+            transition: opacity 0.3s ease, stroke 0.3s ease;
+        }
+
+        .central-node {
+            position: relative;
+            z-index: 10;
+            width: 110px;
+            height: 110px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .central-core {
+            width: 90px;
+            height: 90px;
+            background-color: var(--accent-color);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            box-shadow: 0 0 28px rgba(26, 26, 26, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .central-pulse {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            animation: galaxyPulse 2.5s infinite ease-out;
+            z-index: 1;
+        }
+
+        @keyframes galaxyPulse {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+
+        .skill-nodes-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .galaxy-node {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(var(--angle)) translate(var(--dist)) rotate(calc(-1 * var(--angle)));
+            background: var(--white);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+                        background-color 0.3s ease,
+                        color 0.3s ease,
+                        box-shadow 0.3s ease,
+                        border-color 0.3s ease;
+            white-space: nowrap;
+            z-index: 12;
+            box-shadow: 0 4px 12px rgba(17, 17, 17, 0.04);
+            animation: floatNode 4s infinite ease-in-out alternate;
+            animation-delay: calc(var(--dist) * 0.01s);
+        }
+
+        @keyframes floatNode {
+            0% { margin-top: 0px; }
+            100% { margin-top: -6px; }
+        }
+
+        .galaxy-node:hover, .galaxy-node.active {
             background-color: var(--accent-color);
             color: var(--white);
             border-color: var(--accent-color);
-            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(26, 26, 26, 0.2);
+            transform: translate(-50%, -50%) rotate(var(--angle)) translate(var(--dist)) rotate(calc(-1 * var(--angle))) scale(1.15);
+            z-index: 20;
+        }
+
+        /* --- Clean CV Modal Popup --- */
+        body.modal-open, body.modal-open * {
+            cursor: auto !important;
+        }
+
+        body.modal-open .custom-cursor {
+            display: none !important;
+        }
+
+        .cv-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(17, 17, 17, 0.45);
+            backdrop-filter: blur(8px);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 1.5rem;
+            cursor: auto !important;
+        }
+
+        .cv-modal-overlay * {
+            cursor: auto !important;
+        }
+
+        .cv-modal-close, .cv-download-btn {
+            cursor: pointer !important;
+        }
+
+        .cv-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .cv-modal {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            max-width: 540px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 24px 48px rgba(17, 17, 17, 0.15);
+            transform: scale(0.95) translateY(10px);
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .cv-modal-overlay.active .cv-modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .cv-modal-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .cv-modal-close:hover {
+            background: var(--accent-color);
+            color: var(--white);
+        }
+
+        .cv-modal-header {
+            margin-bottom: 1.75rem;
+            text-align: center;
+        }
+
+        .cv-modal-subtitle {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted-color);
+        }
+
+        .cv-modal-title {
+            font-size: 24px;
+            font-weight: 500;
+            margin-top: 0.25rem;
+        }
+
+        .cv-modal-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .cv-option-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .cv-option-card:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 6px 18px rgba(17, 17, 17, 0.04);
+        }
+
+        .cv-option-tag {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: var(--white);
+            color: var(--accent-color);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            display: inline-block;
+            margin-bottom: 0.4rem;
+        }
+
+        .cv-option-info h4 {
+            font-size: 17px;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .cv-option-info p {
+            font-size: 13px;
+            color: var(--muted-color);
+            line-height: 1.5;
+        }
+
+        .cv-option-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .cv-download-btn {
+            font-size: 12px;
+            padding: 0.5rem 1rem;
         }
 
         /* --- 5. Projects Section --- */
@@ -1709,12 +2003,15 @@
             <a href="#" class="logo">Khadeeja <span>Hanna</span></a>
             <div class="nav-links">
                 <a href="#about" class="nav-link">About</a>
+                <a href="#experience" class="nav-link">Experience</a>
                 <a href="#skills" class="nav-link">Skills</a>
                 <a href="#projects" class="nav-link">Projects</a>
+                <a href="#certifications" class="nav-link">Certifications</a>
+                <a href="#focus" class="nav-link">Focus</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
             <div class="nav-actions">
-                <a href="hanna_cv (10).pdf" target="_blank" class="btn-outline">Download CV</a>
+                <button class="btn-outline btn-cv-trigger">Download CV</button>
                 <a href="#contact" class="btn-filled">Get In Touch</a>
             </div>
         </div>
@@ -1733,7 +2030,7 @@
                 <h2 class="hero-subheading">AI & Data Science Engineer</h2>
                 <p class="hero-subtitle">Engineering intelligent systems and building practical AI solutions.</p>
                 <div class="hero-buttons">
-                    <a href="hanna_cv (10).pdf" target="_blank" class="btn-filled">Download Resume</a>
+                    <button class="btn-filled btn-cv-trigger">Download Resume</button>
                     <a href="#projects" class="btn-outline">View Projects</a>
                 </div>
             </div>
@@ -1748,14 +2045,14 @@
     <section id="about" class="container section-padding">
         <div class="about-grid">
             <!-- Left Col -->
-            <div class="about-left" data-reveal="fade-up">
+            <div class="about-left">
                 <span class="section-label">● About Me</span>
                 <p class="about-bio">Artificial Intelligence and Data Science graduate passionate about developing intelligent systems using Machine Learning, Computer Vision, NLP, and Generative AI.</p>
                 <p class="about-bio-sub">Skilled in Python and AI application development, with hands-on experience building practical solutions that address real-world challenges.</p>
             </div>
             
             <!-- Center Col -->
-            <div class="about-center" data-reveal="fade-up">
+            <div class="about-center">
                 <div class="metric-card">
                     <div class="about-thumb-wrap">
                         <img src="me.jpeg" alt="Small Profile Avatar" class="about-thumb">
@@ -1766,7 +2063,7 @@
             </div>
 
             <!-- Right Col -->
-            <div class="about-right" data-reveal="fade-up">
+            <div class="about-right">
                 <div class="strengths-block">
                     <h3>Key Strengths</h3>
                     <ul class="strengths-list">
@@ -1783,10 +2080,10 @@
 
     <!-- 4. EDUCATION SECTION -->
     <section id="education" class="container section-padding">
-        <span class="section-label" data-reveal="fade-up">● Education</span>
-        <h2 class="section-title" data-reveal="fade-up">Academic Foundation</h2>
+        <span class="section-label">● Education</span>
+        <h2 class="section-title">Academic Foundation</h2>
         
-        <div class="edu-list" data-reveal="fade-up">
+        <div class="edu-list">
             <div class="edu-item">
                 <h3 class="edu-degree">Bachelor of Technology (B.Tech)</h3>
                 <span class="edu-school">MES College of Engineering, Kuttipuram</span>
@@ -1807,51 +2104,161 @@
         </div>
     </section>
 
-    <!-- 5. TECHNICAL SKILLS SECTION -->
-    <section id="skills" class="container section-padding">
-        <div class="skills-grid">
-            <div data-reveal="fade-up">
-                <span class="section-label">● Skills</span>
-                <h2 class="section-title" style="margin-bottom: 2rem;">Technical Expertise</h2>
-                <p class="skills-intro">A curated ecosystem of analytical frameworks, neural models, database stacks, and responsive client-side interface technologies.</p>
+    <!-- 4.1 EXPERIENCE SECTION (EDIGLOBE & OUTRIX) -->
+    <section id="experience" class="container section-padding">
+        <span class="section-label">● Experience</span>
+        <h2 class="section-title">Professional Experience</h2>
+        
+        <div class="timeline">
+            <!-- Item 1: Ediglobe (Newest Position) -->
+            <div class="timeline-item featured">
+                <div class="timeline-header-row">
+                    <div class="timeline-left">
+                        <h3 class="timeline-company">Ediglobe</h3>
+                        <span class="timeline-date">Jul 2026 – Present</span>
+                    </div>
+                    <div class="timeline-right">
+                        <h4 class="timeline-role">AI/ML Intern &mdash; Remote</h4>
+                        <p class="timeline-desc">Engineered data preprocessing pipelines, predictive analytics models, and natural language text vectorization workflows.</p>
+                        <ul class="drawer-list" style="margin-top: 0.5rem;">
+                            <li>Data preprocessing and exploratory data analysis using Python, Pandas, and NumPy.</li>
+                            <li>Developed Machine Learning models using Scikit-learn for predictive analytics.</li>
+                            <li>Built NLP preprocessing pipelines using tokenization, TF-IDF, and text vectorization.</li>
+                        </ul>
+                        <div class="timeline-tags">
+                            <span class="tag-pill">Python</span>
+                            <span class="tag-pill">Pandas</span>
+                            <span class="tag-pill">NumPy</span>
+                            <span class="tag-pill">Scikit-learn</span>
+                            <span class="tag-pill">NLP</span>
+                            <span class="tag-pill">TF-IDF</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="skills-container" data-reveal="fade-up">
-                <div class="skill-pill">Python</div>
-                <div class="skill-pill">R Language</div>
-                <div class="skill-pill">Machine Learning</div>
-                <div class="skill-pill">Deep Learning</div>
-                <div class="skill-pill">Computer Vision</div>
-                <div class="skill-pill">Natural Language Processing</div>
-                <div class="skill-pill">Super-Resolution (ESRGAN)</div>
-                <div class="skill-pill">Data Analytics</div>
-                <div class="skill-pill">SQL & SQLite</div>
-                <div class="skill-pill">Flask</div>
-                <div class="skill-pill">OCR Engines</div>
-                <div class="skill-pill">Twilio API</div>
-                <div class="skill-pill">Gemini API</div>
-                <div class="skill-pill">HTML5</div>
-                <div class="skill-pill">CSS3</div>
-                <div class="skill-pill">JavaScript</div>
-                <div class="skill-pill">Data Visualization</div>
-                <div class="skill-pill">Git & GitHub</div>
+
+            <!-- Item 2: Outrix -->
+            <div class="timeline-item">
+                <div class="timeline-header-row">
+                    <div class="timeline-left">
+                        <h3 class="timeline-company">Outrix</h3>
+                        <span class="timeline-date">Jul 2025 – Aug 2025</span>
+                    </div>
+                    <div class="timeline-right">
+                        <h4 class="timeline-role">AI/ML Intern &mdash; Remote</h4>
+                        <p class="timeline-desc">Applied machine learning algorithms for real-world dataset analytics, customer behavior patterns, and model performance metrics.</p>
+                        <ul class="drawer-list" style="margin-top: 0.5rem;">
+                            <li>Applied Machine Learning techniques using Python for real-world data analysis tasks.</li>
+                            <li>Worked with datasets to identify patterns, trends, and actionable insights.</li>
+                            <li>Assisted in data preprocessing, cleaning, and model evaluation activities.</li>
+                        </ul>
+                        <div class="timeline-tags">
+                            <span class="tag-pill">Python</span>
+                            <span class="tag-pill">SQL</span>
+                            <span class="tag-pill">Data Analytics</span>
+                            <span class="tag-pill">Machine Learning</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 6. KEY PROJECTS & EXPERIENCES SECTION -->
+    <!-- 5. TECHNICAL SKILLS SECTION (AI SKILLS GALAXY UNIVERSE) -->
+    <section id="skills" class="container section-padding">
+        <div class="skills-galaxy-header">
+            <span class="section-label">● Skills Galaxy</span>
+            <h2 class="section-title">Technology Universe</h2>
+            <p class="skills-intro" style="max-width:600px;">An interactive orbit of machine learning frameworks, vector engines, neural architectures, and intelligent system stacks.</p>
+        </div>
+
+        <div class="skills-universe-wrapper">
+            <!-- Glassmorphism Floating Info Card -->
+            <div class="skill-info-card" id="skillInfoCard">
+                <div class="skill-info-header">
+                    <h3 id="skillCardTitle">Select a Technology</h3>
+                    <span class="skill-info-tag" id="skillCardTag">AI Stack</span>
+                </div>
+                <p class="skill-info-desc" id="skillCardDesc">Hover over or click any floating node in the galaxy to view its role in my AI/ML engineering pipeline.</p>
+            </div>
+
+            <!-- Galaxy Universe Canvas Container -->
+            <div class="galaxy-viewport">
+                <!-- SVG Orbit Lines -->
+                <svg class="galaxy-orbits-svg" viewBox="0 0 800 800">
+                    <circle cx="400" cy="400" r="140" class="orbit-line inner-orbit" />
+                    <circle cx="400" cy="400" r="230" class="orbit-line mid-orbit" />
+                    <circle cx="400" cy="400" r="320" class="orbit-line outer-orbit" />
+                </svg>
+
+                <!-- Central Node -->
+                <div class="central-node">
+                    <div class="central-core">
+                        <span>SKILLS</span>
+                    </div>
+                    <div class="central-pulse"></div>
+                </div>
+
+                <!-- Orbital Nodes (16 floating skill nodes) -->
+                <div class="skill-nodes-container">
+                    <button class="galaxy-node inner-node" data-skill="Python" data-desc="Primary programming language used across my AI/ML projects." data-tag="Language" style="--angle: 0deg; --dist: 140px;">Python</button>
+                    <button class="galaxy-node inner-node" data-skill="RAG" data-desc="Retrieval-Augmented Generation used in my Document Q&A system." data-tag="Architecture" style="--angle: 90deg; --dist: 140px;">RAG</button>
+                    <button class="galaxy-node inner-node" data-skill="FastAPI" data-desc="Backend framework used to build the RAG API." data-tag="Framework" style="--angle: 180deg; --dist: 140px;">FastAPI</button>
+                    <button class="galaxy-node inner-node" data-skill="ChromaDB" data-desc="Vector database used in my RAG Document Assistant." data-tag="Vector Database" style="--angle: 270deg; --dist: 140px;">ChromaDB</button>
+
+                    <button class="galaxy-node mid-node" data-skill="Machine Learning" data-desc="Predictive analytics, Scikit-learn, and model development." data-tag="Core AI" style="--angle: 30deg; --dist: 230px;">Machine Learning</button>
+                    <button class="galaxy-node mid-node" data-skill="Deep Learning" data-desc="Neural networks, PyTorch, and super-resolution models." data-tag="Deep AI" style="--angle: 90deg; --dist: 230px;">Deep Learning</button>
+                    <button class="galaxy-node mid-node" data-skill="NLP" data-desc="Text processing, TF-IDF and vectorization." data-tag="Language AI" style="--angle: 150deg; --dist: 230px;">NLP</button>
+                    <button class="galaxy-node mid-node" data-skill="Generative AI" data-desc="Gemini API, LLM chatbots, and prompt engineering." data-tag="GenAI" style="--angle: 210deg; --dist: 230px;">Generative AI</button>
+                    <button class="galaxy-node mid-node" data-skill="Computer Vision" data-desc="Used for AI-based image processing and computer vision applications." data-tag="Vision AI" style="--angle: 270deg; --dist: 230px;">Computer Vision</button>
+                    <button class="galaxy-node mid-node" data-skill="Data Analytics" data-desc="Data preprocessing, Pandas, NumPy, and exploratory analysis." data-tag="Analytics" style="--angle: 330deg; --dist: 230px;">Data Analytics</button>
+
+                    <button class="galaxy-node outer-node" data-skill="Flask" data-desc="Web backend development for AI platforms like Mentora AI." data-tag="Backend" style="--angle: 15deg; --dist: 320px;">Flask</button>
+                    <button class="galaxy-node outer-node" data-skill="PyTorch" data-desc="Deep learning framework for Real-ESRGAN and computer vision." data-tag="Framework" style="--angle: 75deg; --dist: 320px;">PyTorch</button>
+                    <button class="galaxy-node outer-node" data-skill="Scikit-learn" data-desc="Machine learning algorithms and predictive modeling." data-tag="Library" style="--angle: 135deg; --dist: 320px;">Scikit-learn</button>
+                    <button class="galaxy-node outer-node" data-skill="OpenCV" data-desc="Image processing, filtering, and computer vision pipelines." data-tag="Vision Engine" style="--angle: 195deg; --dist: 320px;">OpenCV</button>
+                    <button class="galaxy-node outer-node" data-skill="SQL" data-desc="Relational database querying and data management." data-tag="Database" style="--angle: 255deg; --dist: 320px;">SQL</button>
+                    <button class="galaxy-node outer-node" data-skill="Git & GitHub" data-desc="Version control and collaborative code repositories." data-tag="Tooling" style="--angle: 315deg; --dist: 320px;">Git & GitHub</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. KEY PROJECTS SECTION -->
     <section id="projects" class="container section-padding">
-        <div class="portfolio-header" data-reveal="fade-up">
+        <div class="portfolio-header">
             <div>
-                <span class="section-label">● Projects & Experience</span>
-                <h2 class="section-title">Key Projects & Experience</h2>
+                <span class="section-label">● Projects</span>
+                <h2 class="section-title">Key AI Projects</h2>
             </div>
         </div>
         
         <div class="projects-grid">
-            <!-- Card 1: Mentora AI -->
-            <a href="https://github.com/proteam123/mentor" target="_blank" class="project-card" data-tilt data-reveal="portfolio-reveal">
-                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800" alt="Mentora AI rendering" class="project-bg-img">
+            <!-- Card 1: RAG Document Assistant (NEW PROJECT) -->
+            <a href="https://github.com/haaaanv/rag-assistant" target="_blank" class="project-card" data-tilt>
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800" alt="RAG Document Assistant visual" class="project-bg-img">
+                <div class="project-overlay"></div>
+                <span class="project-arrow">↗</span>
+                <div class="project-content">
+                    <div class="project-badge-wrap">
+                        <span class="project-badge">RAG & LLMs</span>
+                    </div>
+                    <h3 class="project-title">RAG Document Assistant</h3>
+                    <p class="project-desc">Developed a Retrieval-Augmented Generation (RAG) pipeline using ChromaDB, Sentence Transformers, and Gemini API. Built a FastAPI backend with semantic search and source-cited document responses.</p>
+                    <div class="project-tags">
+                        <span class="project-tech">Python</span>
+                        <span class="project-tech">React</span>
+                        <span class="project-tech">FastAPI</span>
+                        <span class="project-tech">ChromaDB</span>
+                        <span class="project-tech">Sentence Transformers</span>
+                        <span class="project-tech">Gemini API</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Card 2: Mentora AI -->
+            <a href="https://github.com/proteam123/mentor" target="_blank" class="project-card" data-tilt>
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800" alt="Mentora AI rendering" class="project-bg-img">
                 <div class="project-overlay"></div>
                 <span class="project-arrow">↗</span>
                 <div class="project-content">
@@ -1870,8 +2277,8 @@
                 </div>
             </a>
 
-            <!-- Card 2: Super-Resolution X-Ray -->
-            <a href="https://www.linkedin.com/posts/khadeeja-hanna-351907337_this-project-focuses-on-improving-the-clarity-ugcPost-7469715443289702400-eqgR/?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFSsjS0BsKSXjVxaYysqbQisJQPKWFBbMtM" target="_blank" class="project-card" data-tilt data-reveal="portfolio-reveal">
+            <!-- Card 3: Super-Resolution X-Ray -->
+            <a href="https://www.linkedin.com/posts/khadeeja-hanna-351907337_this-project-focuses-on-improving-the-clarity-ugcPost-7469715443289702400-eqgR/?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFSsjS0BsKSXjVxaYysqbQisJQPKWFBbMtM" target="_blank" class="project-card" data-tilt>
                 <img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&q=80&w=800" alt="Super-resolution biological x-ray visual" class="project-bg-img">
                 <div class="project-overlay"></div>
                 <span class="project-arrow">↗</span>
@@ -1890,8 +2297,8 @@
                 </div>
             </a>
 
-            <!-- Card 3: Outrix Internship -->
-            <a href="https://www.linkedin.com/posts/khadeeja-hanna-351907337_machinelearning-regression-housepriceprediction-ugcPost-7353446344616812544-vER_/?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFSsjS0BsKSXjVxaYysqbQisJQPKWFBbMtM" target="_blank" class="project-card" data-tilt data-reveal="portfolio-reveal">
+            <!-- Card 4: Outrix Internship -->
+            <a href="https://www.linkedin.com/posts/khadeeja-hanna-351907337_machinelearning-regression-housepriceprediction-ugcPost-7353446344616812544-vER_/?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFSsjS0BsKSXjVxaYysqbQisJQPKWFBbMtM" target="_blank" class="project-card" data-tilt>
                 <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="Outrix internship visual" class="project-bg-img">
                 <div class="project-overlay"></div>
                 <span class="project-arrow">↗</span>
@@ -1910,8 +2317,8 @@
                 </div>
             </a>
 
-            <!-- Card 4: Cyberbullying Detection -->
-            <a href="hanna_seminar (2).pdf" target="_blank" id="seminar" class="project-card" data-tilt data-reveal="portfolio-reveal">
+            <!-- Card 5: Cyberbullying Detection -->
+            <a href="hanna_seminar (2).pdf" target="_blank" id="seminar" class="project-card" data-tilt>
                 <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800" alt="Artificial Intelligence Cyberbullying Detection" class="project-bg-img">
                 <div class="project-overlay"></div>
                 <span class="project-arrow">↗</span>
@@ -1935,11 +2342,23 @@
 
     <!-- 7. CERTIFICATIONS SECTION -->
     <section id="certifications" class="container section-padding">
-        <span class="section-label" data-reveal="fade-up">● Certifications</span>
-        <h2 class="section-title" data-reveal="fade-up">Learning & Achievements</h2>
+        <span class="section-label">● Certifications</span>
+        <h2 class="section-title">Learning & Achievements</h2>
         
-        <div class="certs-grid" data-reveal="fade-up">
-            <!-- Cert 1 -->
+        <div class="certs-grid">
+            <!-- Cert 1: Datacom Forage (NEW CERTIFICATION) -->
+            <a href="https://lnkd.in/p/dMwdj8JH" class="cert-card" target="_blank">
+                <div class="cert-header">
+                    <span class="cert-org">Datacom &mdash; Forage</span>
+                    <h3 class="cert-title">Partnering with AI in the Workplace Job Simulation</h3>
+                </div>
+                <div class="cert-footer">
+                    <span class="cert-date">2026</span>
+                    <span class="cert-arrow">→</span>
+                </div>
+            </a>
+
+            <!-- Cert 2: Techmaghi & IIT Hyderabad -->
             <a href="https://www.linkedin.com/posts/khadeeja-hanna-351907337_internship-ugcPost-7462755415722778624-wwwW/?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFSsjS0BsKSXjVxaYysqbQisJQPKWFBbMtM" class="cert-card" target="_blank">
                 <div class="cert-header">
                     <span class="cert-org">Techmaghi & IIT Hyderabad</span>
@@ -1951,7 +2370,7 @@
                 </div>
             </a>
 
-            <!-- Cert 2 -->
+            <!-- Cert 3: Outrix -->
             <a href="https://www.linkedin.com/posts/khadeeja-hanna-351907337_internship-ugcPost-7462751265274421249-J1Sc/?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFSsjS0BsKSXjVxaYysqbQisJQPKWFBbMtM" class="cert-card" target="_blank">
                 <div class="cert-header">
                     <span class="cert-org">Outrix</span>
@@ -1963,19 +2382,7 @@
                 </div>
             </a>
 
-            <!-- Cert 3 -->
-            <div class="cert-card">
-                <div class="cert-header">
-                    <span class="cert-org">MES College Core</span>
-                    <h3 class="cert-title">Artificial Intelligence Systems Certification</h3>
-                </div>
-                <div class="cert-footer">
-                    <span class="cert-date">2026</span>
-                    <span class="cert-arrow" style="opacity:0;">→</span>
-                </div>
-            </div>
-
-            <!-- Cert 4 -->
+            <!-- Cert 4: DCAI & Dubai Future Foundation -->
             <a href="https://www.linkedin.com/posts/khadeeja-hanna-351907337_certificate-ugcPost-7474735220672516096-ypg4/?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFSsjS0BsKSXjVxaYysqbQisJQPKWFBbMtM" class="cert-card" target="_blank">
                 <div class="cert-header">
                     <span class="cert-org">DCAI & Dubai Future Foundation</span>
@@ -1986,41 +2393,73 @@
                     <span class="cert-arrow">→</span>
                 </div>
             </a>
+
+            <!-- Cert 5: MES College Core -->
+            <div class="cert-card">
+                <div class="cert-header">
+                    <span class="cert-org">MES College Core</span>
+                    <h3 class="cert-title">Artificial Intelligence Systems Certification</h3>
+                </div>
+                <div class="cert-footer">
+                    <span class="cert-date">2026</span>
+                    <span class="cert-arrow" style="opacity:0;">→</span>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- 8. FOCUS (AREA OF INTERESTS) SECTION -->
     <section id="focus" class="container section-padding">
-        <span class="section-label" data-reveal="fade-up">● Focus</span>
-        <h2 class="section-title" data-reveal="fade-up">Areas of Interest</h2>
+        <span class="section-label">● Career Focus</span>
+        <h2 class="section-title">Areas of Interest</h2>
         
-        <div class="focus-grid" data-reveal="fade-up">
-            <!-- Focus Card 1 -->
+        <div class="focus-grid" style="grid-template-columns: repeat(4, 1fr);">
             <div class="focus-card">
                 <div class="focus-num">01</div>
-                <h3 class="focus-title">Machine Learning</h3>
-                <p class="focus-desc">Designing, tuning, and deploying predictive modeling pipelines and statistical algorithms to analyze dense data tables.</p>
+                <h3 class="focus-title">AI Engineer</h3>
+                <p class="focus-desc">Developing end-to-end intelligent systems, neural architectures, and scalable AI deployment pipelines.</p>
             </div>
             
-            <!-- Focus Card 2 -->
             <div class="focus-card">
                 <div class="focus-num">02</div>
-                <h3 class="focus-title">Computer Vision</h3>
-                <p class="focus-desc">Implementing neural super-resolution networks like Real-ESRGAN and OpenCV models to upscale and analyze biological radiography imagery.</p>
+                <h3 class="focus-title">Data Analyst</h3>
+                <p class="focus-desc">Performing exploratory data analysis, business metric mapping, and statistical visualizations.</p>
             </div>
 
-            <!-- Focus Card 3 -->
             <div class="focus-card">
                 <div class="focus-num">03</div>
-                <h3 class="focus-title">NLP / LLMs</h3>
-                <p class="focus-desc">Developing natural language utilities by integrating APIs (e.g. Gemini LLM), VADER sentiment tools, and speech indexers.</p>
+                <h3 class="focus-title">AI Analyst</h3>
+                <p class="focus-desc">Evaluating AI model performance, algorithmic accuracy, and domain-specific data insights.</p>
             </div>
 
-            <!-- Focus Card 4 -->
             <div class="focus-card">
                 <div class="focus-num">04</div>
-                <h3 class="focus-title">Data Analytics</h3>
-                <p class="focus-desc">Extracting critical performance indicators and mapping corporate drop-off curves from transactional relational databases.</p>
+                <h3 class="focus-title">Data Scientist</h3>
+                <p class="focus-desc">Constructing predictive modeling pipelines, feature engineering, and data-driven solutions.</p>
+            </div>
+
+            <div class="focus-card">
+                <div class="focus-num">05</div>
+                <h3 class="focus-title">AI Developer</h3>
+                <p class="focus-desc">Integrating Gemini API, RAG workflows, FastAPI backends, and intelligent web applications.</p>
+            </div>
+
+            <div class="focus-card">
+                <div class="focus-num">06</div>
+                <h3 class="focus-title">Machine Learning Engineer</h3>
+                <p class="focus-desc">Training, tuning, and deploying ML classification, regression, and clustering algorithms.</p>
+            </div>
+
+            <div class="focus-card">
+                <div class="focus-num">07</div>
+                <h3 class="focus-title">Business Intelligence (BI) Analyst</h3>
+                <p class="focus-desc">Mapping transactional database metrics into executive reporting dashboards and analytics.</p>
+            </div>
+
+            <div class="focus-card">
+                <div class="focus-num">08</div>
+                <h3 class="focus-title">QA Automation Engineer</h3>
+                <p class="focus-desc">Building automated test suites, API verification scripts, and quality assurance pipelines.</p>
             </div>
         </div>
     </section>
@@ -2098,46 +2537,54 @@
 
         <div class="container footer-bottom">
             <span>© 2026 Khadeeja Hanna P. All rights reserved.</span>
-            <span>Tailored for hiring managers. Built with GSAP, Lenis, and Vanilla-Tilt.</span>
+            <span>Tailored for hiring managers. Built with GSAP and Vanilla-Tilt.</span>
         </div>
     </footer>
+
+    <!-- CV POPUP MODAL -->
+    <div class="cv-modal-overlay" id="cvModalOverlay">
+        <div class="cv-modal">
+            <button class="cv-modal-close" id="cvModalClose" aria-label="Close Modal">&times;</button>
+            <div class="cv-modal-header">
+                <span class="cv-modal-subtitle">Curriculum Vitae</span>
+                <h3 class="cv-modal-title">Choose CV Version</h3>
+            </div>
+            <div class="cv-modal-options">
+                <div class="cv-option-card">
+                    <div class="cv-option-info">
+                        <span class="cv-option-tag">CV Version 1</span>
+                        <h4>AI & Data Science Resume</h4>
+                        <p>AI Engineering, RAG Architectures, Ediglobe Internship, and Model Deployment.</p>
+                    </div>
+                    <div class="cv-option-actions">
+                        <a href="Khadeeja_Hanna_CV_Version1.pdf" target="_blank" class="btn-filled cv-download-btn">View / Download PDF ↗</a>
+                    </div>
+                </div>
+
+                <div class="cv-option-card">
+                    <div class="cv-option-info">
+                        <span class="cv-option-tag">CV Version 2</span>
+                        <h4>Technical Experience Resume</h4>
+                        <p>Machine Learning research, data analysis, and academic background.</p>
+                    </div>
+                    <div class="cv-option-actions">
+                        <a href="Khadeeja_Hanna_CV_Version2.pdf" target="_blank" class="btn-filled cv-download-btn">View / Download PDF ↗</a>
+                        <a href="resume hanna word fnlized.docx" target="_blank" class="btn-outline cv-download-btn">Word Format ↗</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- CDN Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js"></script>
 
     <!-- Custom Micro-Interactions Scripting -->
     <script>
         // Enable GSAP ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
-
-        // --- Studio Freight Lenis Smooth Scrolling ---
-        const lenis = new Lenis({
-            duration: 0.5, // Reduced smoothing by 50% (from 1.0s to 0.5s) for instant response
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            direction: 'vertical',
-            smooth: true,
-            mouseMultiplier: 1,
-            smoothTouch: false,
-            touchMultiplier: 1.5, // Reduced for immediate, natural response
-            infinite: false
-        });
-
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
-
-        // Synchronize ScrollTrigger
-        lenis.on('scroll', ScrollTrigger.update);
-        
-        gsap.ticker.add((time) => {
-            lenis.raf(time * 1000);
-        });
-        gsap.ticker.lagSmoothing(0);
 
         // --- Custom Cursor with Lerped Weight ---
         const cursor = document.querySelector('.custom-cursor');
@@ -2158,20 +2605,20 @@
         function animateCursor() {
             cursorX = lerp(cursorX, mouseX, 0.15);
             cursorY = lerp(cursorY, mouseY, 0.15);
-            cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+            if (cursor) cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
             requestAnimationFrame(animateCursor);
         }
         animateCursor();
 
         // Scale & Inversion Effect
         const setupCursorHover = () => {
-            const targets = document.querySelectorAll('a, button, .project-card, .timeline-item, .cert-card, .tab-btn, .skill-pill, .logo, .seminar-card, .seminar-cta');
+            const targets = document.querySelectorAll('a, button, .project-card, .timeline-item, .cert-card, .tab-btn, .skill-pill, .logo, .seminar-card, .seminar-cta, .galaxy-node, .cv-modal-close, .btn-cv-trigger');
             targets.forEach(t => {
                 t.addEventListener('mouseenter', () => {
-                    cursor.classList.add('hovered');
+                    if (cursor) cursor.classList.add('hovered');
                 });
                 t.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('hovered');
+                    if (cursor) cursor.classList.remove('hovered');
                 });
             });
         };
@@ -2194,8 +2641,6 @@
             }
             lastScrollY = currentScrollY;
         });
-
-
 
         // --- Text Scramble Character Algorithm ---
         function scrambleText(element, originalText, duration = 800) {
@@ -2235,7 +2680,7 @@
             }
         });
 
-        // --- Hero Portrait Parallax (0.4x Scrub Speed) ---
+        // --- Hero Portrait Parallax ---
         gsap.to(".hero-portrait", {
             yPercent: 20,
             ease: "none",
@@ -2247,45 +2692,84 @@
             }
         });
 
-        // --- GSAP ScrollTrigger Animations ---
+        // --- Skills Universe Interactive Tooltips & Orbit Handlers ---
+        const skillNodes = document.querySelectorAll('.galaxy-node');
+        const cardTitle = document.getElementById('skillCardTitle');
+        const cardTag = document.getElementById('skillCardTag');
+        const cardDesc = document.getElementById('skillCardDesc');
+        const orbits = document.querySelectorAll('.orbit-line');
 
-        // 1. General Reveal Fade-Up - Apple/Vercel style: fast, low travel distance, hardware accelerated
-        const revealElements = document.querySelectorAll('[data-reveal="fade-up"]');
-        revealElements.forEach(el => {
-            gsap.from(el, {
-                opacity: 0,
-                y: 15, // Low travel distance for clean immediate feel
-                duration: 0.45, // Fast response
-                ease: "power2.out", // Snappy easing
-                force3D: true, // GPU accelerated
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 90%", // Trigger earlier so it's ready
-                    toggleActions: "play none none none"
-                }
+        if (skillNodes.length > 0) {
+            skillNodes.forEach(node => {
+                node.addEventListener('mouseenter', () => {
+                    const skill = node.getAttribute('data-skill');
+                    const desc = node.getAttribute('data-desc');
+                    const tag = node.getAttribute('data-tag');
+                    
+                    if (cardTitle) cardTitle.textContent = skill;
+                    if (cardTag) cardTag.textContent = tag;
+                    if (cardDesc) cardDesc.textContent = desc;
+
+                    orbits.forEach(o => o.style.opacity = '1');
+                });
+
+                node.addEventListener('mouseleave', () => {
+                    orbits.forEach(o => o.style.opacity = '0.7');
+                });
+
+                node.addEventListener('click', () => {
+                    skillNodes.forEach(n => n.classList.remove('active'));
+                    node.classList.add('active');
+                    
+                    const skill = node.getAttribute('data-skill');
+                    const desc = node.getAttribute('data-desc');
+                    const tag = node.getAttribute('data-tag');
+                    
+                    if (cardTitle) cardTitle.textContent = skill;
+                    if (cardTag) cardTag.textContent = tag;
+                    if (cardDesc) cardDesc.textContent = desc;
+                });
             });
+        }
+
+        // --- Clean CV Modal Trigger Logic ---
+        const cvModalOverlay = document.getElementById('cvModalOverlay');
+        const cvModalClose = document.getElementById('cvModalClose');
+        const cvButtons = document.querySelectorAll('.btn-cv-trigger');
+
+        function openCvModal(e) {
+            if (e) e.preventDefault();
+            if (cvModalOverlay) cvModalOverlay.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeCvModal() {
+            if (cvModalOverlay) cvModalOverlay.classList.remove('active');
+            document.body.classList.remove('modal-open');
+        }
+
+        cvButtons.forEach(btn => {
+            btn.addEventListener('click', openCvModal);
         });
 
-        // 2. Project Card Stagger Reveal
-        const projectCards = document.querySelectorAll('[data-reveal="portfolio-reveal"]');
-        if (projectCards.length > 0) {
-            gsap.from(projectCards, {
-                opacity: 0,
-                y: 20, // Low travel distance
-                duration: 0.55, // Fast reveal
-                stagger: 0.06, // Snappy cascade stagger
-                ease: "power2.out",
-                force3D: true,
-                scrollTrigger: {
-                    trigger: ".projects-grid",
-                    start: "top 85%"
+        if (cvModalClose) {
+            cvModalClose.addEventListener('click', closeCvModal);
+        }
+
+        if (cvModalOverlay) {
+            cvModalOverlay.addEventListener('click', (e) => {
+                if (e.target === cvModalOverlay) {
+                    closeCvModal();
                 }
             });
         }
 
-
-
-
+        // Close modal after selecting a CV option
+        document.querySelectorAll('.cv-download-btn').forEach(link => {
+            link.addEventListener('click', () => {
+                setTimeout(closeCvModal, 300);
+            });
+        });
 
         // --- Vanilla Tilt Initialization ---
         VanillaTilt.init(document.querySelectorAll(".project-card"), {
@@ -2296,10 +2780,10 @@
             transition: true
         });
 
-        // Re-setup hover cursor bindings just in case
+        // Re-setup hover cursor bindings
         setTimeout(() => {
             setupCursorHover();
-        }, 1000);
+        }, 500);
     </script>
 </body>
 </html>
